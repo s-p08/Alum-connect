@@ -52,7 +52,7 @@ const allowedOrigins = [
 
 const corsOptions = {
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.onrender.com')) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -70,7 +70,8 @@ const corsOptions = {
   ],
   optionsSuccessStatus: 200
 };
-app.use(cors(corsOptions));
+app.use('/api', cors(corsOptions));
+app.use('/auth', cors(corsOptions));
 
 // Body parser middleware
 app.use(express.json({ limit: '10kb' }));

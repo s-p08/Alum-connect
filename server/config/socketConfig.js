@@ -11,6 +11,7 @@ module.exports = (server, sessionConfig) => {
       'http://localhost:3000',  // Backend server
       process.env.VITE_API_BASE_URL,  // Production frontend URL
       process.env.VITE_backend_URL,  // Production backend URL
+      process.env.RENDER_EXTERNAL_URL, // Production Render URL
     ].filter(Boolean),
     credentials: true,
     methods: ['GET', 'POST'],
