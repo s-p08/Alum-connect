@@ -46,7 +46,8 @@ const allowedOrigins = [
   'http://15.206.215.46:3000',
   'http://alumconnect.home.kg',
   process.env.VITE_API_BASE_URL,
-  process.env.VITE_backend_URL
+  process.env.VITE_backend_URL,
+  process.env.RENDER_EXTERNAL_URL
 ].filter(Boolean);
 
 const corsOptions = {
