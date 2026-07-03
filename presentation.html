@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KUK AlumConnect - Premium Project Presentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.5);
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --bg: #030712;
+            --surface: rgba(30, 41, 59, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --grad: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            --grad-text: linear-gradient(to right, #818cf8, #c084fc);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Background Animated Particles */
+        .bg-blobs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 50%, #111827 0%, #030712 100%);
+        }
+
+        .blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: var(--primary);
+            filter: blur(120px);
+            opacity: 0.15;
+            border-radius: 50%;
+            animation: float 20s infinite alternate;
+        }
+
+        .blob-2 {
+            background: #a855f7;
+            width: 400px;
+            height: 400px;
+            right: 0;
+            top: 0;
+            animation-delay: -5s;
+        }
+
+        .blob-3 {
+            background: #10b981;
+            width: 300px;
+            height: 300px;
+            bottom: 0;
+            left: 20%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(100px, 100px) scale(1.1); }
+            66% { transform: translate(-50px, 150px) scale(0.9); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        /* Presentation Logic */
+        .presentation-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            perspective: 2000px;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+            transform: scale(0.9) translateY(50px);
+            z-index: 1;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1) translateY(0);
+            z-index: 10;
+        }
+
+        .slide.prev {
+            transform: scale(1.1) translateY(-50px);
+            opacity: 0;
+        }
+
+        /* Typography */
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 6rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            line-height: 1;
+            letter-spacing: -2px;
+        }
+
+        h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            color: white;
+            text-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--grad);
+            border-radius: 2px;
+        }
+
+        p.subtitle {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            text-align: center;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Feature Cards (Glassmorphism) */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: var(--surface);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 2.5rem;
+            border-radius: 32px;
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.25);
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Tech Stack Visuals */
+        .tech-flow {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            padding: 1rem 2rem;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .tech-item i {
+            font-size: 1.2rem;
+            color: var(--primary-light);
+        }
+
+        /* Controls */
+        .nav-controls {
+            position: fixed;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
+            padding: 0.75rem 1.5rem;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: transparent;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .progress-dots {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            width: 30px;
+            background: var(--primary);
+            border-radius: 100px;
+        }
+
+        /* Animation Classes */
+        .stagger-in > * {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .slide.active .stagger-in > * {
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .slide.active .stagger-in > *:nth-child(1) { animation-delay: 0.2s; }
+        .slide.active .stagger-in > *:nth-child(2) { animation-delay: 0.3s; }
+        .slide.active .stagger-in > *:nth-child(3) { animation-delay: 0.4s; }
+        .slide.active .stagger-in > *:nth-child(4) { animation-delay: 0.5s; }
+        .slide.active .stagger-in > *:nth-child(5) { animation-delay: 0.6s; }
+        .slide.active .stagger-in > *:nth-child(6) { animation-delay: 0.7s; }
+
+        @keyframes slideUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .author-tag {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--surface);
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            font-size: 0.9rem;
+            border: 1px solid var(--border);
+        }
+
+        .logo-box {
+            width: 120px;
+            height: 120px;
+            background: var(--grad);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 25px 50px rgba(99, 102, 241, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4); }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="author-tag">
+        <i class="fas fa-code"></i>
+        <span>By <strong>Shivam Prakash</strong></span>
+    </div>
+
+    <div class="presentation-container">
+        <!-- Slide 1: Hero -->
+        <div class="slide active" id="slide-1">
+            <div class="stagger-in" style="display: flex; flex-direction: column; align-items: center;">
+                <div class="logo-box">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>KUK AlumConnect</h1>
+                <p class="subtitle">Elevating Alumni Networking to the Next Generation</p>
+                <div style="margin-top: 3rem; display: flex; gap: 1rem;">
+                    <span class="tech-item"><i class="fas fa-rocket"></i> Fast</span>
+                    <span class="tech-item"><i class="fas fa-shield-alt"></i> Secure</span>
+                    <span class="tech-item"><i class="fas fa-users"></i> Exclusive</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: The Vision -->
+        <div class="slide" id="slide-2">
+            <h2>The Vision</h2>
+            <p class="subtitle">Building a digital bridge that connects the legacy of the past with the potential of the future.</p>
+            <div class="grid-layout stagger-in" style="grid-template-columns: repeat(2, 1fr); max-width: 900px;">
+                <div class="card">
+                    <i class="fas fa-hands-helping"></i>
+                    <h3>Mentorship First</h3>
+                    <p>Enabling direct knowledge transfer from industry veterans to aspiring students.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-briefcase"></i>
+                    <h3>Career Growth</h3>
+                    <p>A closed ecosystem for high-quality job postings and internship referrals.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-heart"></i>
+                    <h3>Giving Back</h3>
+                    <p>Seamless donation flows to support university infrastructure and scholarships.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-project-diagram"></i>
+                    <h3>Global Network</h3>
+                    <p>Connecting KUK alumni across continents for professional collaboration.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Core Features -->
+        <div class="slide" id="slide-3">
+            <h2>Feature Ecosystem</h2>
+            <div class="grid-layout stagger-in">
+                <div class="card">
+                    <i class="fas fa-bullhorn"></i>
+                    <h3>Announcements Hub</h3>
+                    <p>Real-time updates on university events, success stories, and critical notices.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-search-location"></i>
+                    <h3>Smart Directory</h3>
+                    <p>Advanced search by batch, location, and industry with interactive profile views.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-comments"></i>
+                    <h3>Community Forums</h3>
+                    <p>Categorized discussion boards for placements, tech, and general networking.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Instant Connect</h3>
+                    <p>Real-time private messaging powered by WebSockets for zero-latency communication.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-donate"></i>
+                    <h3>Verified Donations</h3>
+                    <p>Secure payment integration for transparent institutional support and tracking.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-mobile-screen-button"></i>
+                    <h3>Responsive UI</h3>
+                    <p>A flawless experience across desktop, tablet, and mobile devices.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Tech Stack -->
+        <div class="slide" id="slide-4">
+            <h2>Technical Excellence</h2>
+            <p class="subtitle">Architected for high performance, security, and developer productivity.</p>
+            
+            <div class="tech-flow stagger-in">
+                <div class="tech-item"><i class="fab fa-react"></i> React.js (Frontend)</div>
+                <div class="tech-item"><i class="fab fa-node-js"></i> Node.js (Runtime)</div>
+                <div class="tech-item"><i class="fas fa-server"></i> Express (API)</div>
+                <div class="tech-item"><i class="fas fa-database"></i> MongoDB (Storage)</div>
+                <div class="tech-item"><i class="fas fa-plug"></i> Socket.io (Real-time)</div>
+                <div class="tech-item"><i class="fas fa-key"></i> Passport.js (Auth)</div>
+                <div class="tech-item"><i class="fas fa-cloud-arrow-up"></i> Cloudinary (Media)</div>
+                <div class="tech-item"><i class="fab fa-css3-alt"></i> Tailwind CSS (Style)</div>
+            </div>
+
+            <div class="card stagger-in" style="margin-top: 3rem; width: 100%; max-width: 800px; border-left: 5px solid var(--primary);">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h3 style="margin-bottom: 0.5rem;">Infrastructure Highlights</h3>
+                        <p>• Optimized REST Endpoints<br>• Real-time Event Driven Architecture<br>• Cloud Media Processing Pipeline</p>
+                    </div>
+                    <i class="fas fa-layer-group" style="font-size: 4rem; opacity: 0.2;"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Future Roadmap -->
+        <div class="slide" id="slide-5">
+            <h1 style="font-size: 4rem; margin-bottom: 2rem;">The Road Ahead</h1>
+            <div class="stagger-in" style="width: 100%; max-width: 800px; display: flex; flex-direction: column; gap: 1.5rem;">
+                <div class="tech-item" style="justify-content: space-between; padding: 1.5rem;">
+                    <span><i class="fas fa-robot"></i> AI-Powered Career Matching</span>
+                    <span style="font-size: 0.8rem; opacity: 0.5;">PHASE 2</span>
+                </div>
+                <div class="tech-item" style="justify-content: space-between; padding: 1.5rem;">
+                    <span><i class="fas fa-video"></i> Integrated Mentorship Video Calls</span>
+                    <span style="font-size: 0.8rem; opacity: 0.5;">PHASE 2</span>
+                </div>
+                <div class="tech-item" style="justify-content: space-between; padding: 1.5rem;">
+                    <span><i class="fas fa-mobile-alt"></i> Dedicated iOS & Android Native Apps</span>
+                    <span style="font-size: 0.8rem; opacity: 0.5;">PHASE 3</span>
+                </div>
+            </div>
+            
+            <div class="stagger-in" style="margin-top: 4rem; text-align: center;">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Let's Build the Future</h2>
+                <p>Questions? I'm happy to discuss.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn" disabled><i class="fas fa-chevron-left"></i></button>
+        <div class="progress-dots" id="dots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <button class="nav-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        
+        let currentSlide = 0;
+
+        function updateSlides() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                } else if (index < currentSlide) {
+                    slide.classList.add('prev');
+                }
+            });
+
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === slides.length - 1;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlides();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlides();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    updateSlides();
+                }
+            } else if (e.key === 'ArrowLeft') {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlides();
+                }
+            }
+        });
+
+        // Click on dots to jump to slide
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateSlides();
+            });
+        });
+    </script>
+</body>
+</html>
