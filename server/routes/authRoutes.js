@@ -145,8 +145,7 @@ router.post("/logout", (req, res, next) => {
 router.get('/google',
   passport.authenticate('google', { 
     scope: ['profile', 'email'],
-    prompt: 'select_account',
-    hd: 'kuk.ac.in'
+    prompt: 'select_account'
   })
 );
 
