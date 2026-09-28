@@ -38,7 +38,7 @@ async function(accessToken, refreshToken, profile, done) {
 
     if (!email.endsWith('@kuk.ac.in')) {
       return done(null, false, { 
-        message: 'Please use your University institute of engineering snd technology kurukshetra email (@kuk.ac.in) to sign in.' 
+        message: 'Please use your University Institute of Engineering and Technology Kurukshetra email (@kuk.ac.in) to sign in.' 
       });
     }
 

@@ -142,23 +142,11 @@ router.post("/logout", (req, res, next) => {
     next(error);
   }
 });
-// In authRoutes.js
-router.get('/check', (req, res) => {
-  res.json({ 
-    isAuthenticated: req.isAuthenticated(),
-    user: req.isAuthenticated() ? {
-      id: req.user.id,
-      name: req.user.name,
-      email: req.user.email,
-      role: req.user.role
-    } : null
-  });
-});
-// Google Auth Routes
 router.get('/google',
   passport.authenticate('google', { 
     scope: ['profile', 'email'],
-    prompt: 'select_account'
+    prompt: 'select_account',
+    hd: 'kuk.ac.in'
   })
 );
 
@@ -174,8 +162,8 @@ router.get('/google/callback',
         
         // Customize error message based on info
         if (info && info.message) {
-          if (info.message.includes('@iiitn.ac.in')) {
-            errorMessage = 'Please use your University institute of engineering snd technology kurukshetra email (@kuk.ac.in) to sign in.';
+          if (info.message.includes('@kuk.ac.in')) {
+            errorMessage = 'Please use your University Institute of Engineering and Technology Kurukshetra email (@kuk.ac.in) to sign in.';
           } else if (info.message.includes('not registered')) {
             errorMessage = 'This email is not registered in our system. Please contact the administrator.';
           }
