@@ -15,13 +15,12 @@ const Navbar = () => {
   // State management
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
-  const [isMessagePopupOpen, setIsMessagePopupOpen] = useState(false);
   
   // Hooks
   const navigate = useNavigate();
   const location = useLocation();
   const { user, loading, setUser } = useUser();
-  const { unreadCount } = useMessage();
+  const { unreadCount, isMessagePopupOpen, setIsMessagePopupOpen } = useMessage();
 
   // Screen size detection
   useEffect(() => {
@@ -92,15 +91,15 @@ const Navbar = () => {
       <nav className="bg-white backdrop-blur-md bg-opacity-95 border-b border-gray-100 px-6 py-3 flex justify-between items-center fixed top-0 w-full z-50 shadow-sm">
         {/* Left side - Logo and College Name */}
         <div className="flex items-center space-x-3">
-          <div className="bg-white p-1.5 rounded-lg shadow-sm">
-            <img src={KUKLogo} alt="Kurukshetra University Logo" className="w-8 h-8" />
+          <div className="bg-white p-1 rounded-lg shadow-sm border border-gray-100 flex items-center justify-center">
+            <img src={KUKLogo} alt="Kurukshetra University Logo" className="w-10 h-10 object-contain" />
           </div>
           <div className="flex flex-col">
-            <span className="text-blue-600 font-semibold text-lg leading-tight">
+            <span className="text-blue-600 font-bold text-lg leading-tight">
               {isSmallScreen ? "KUK" : "UIET KURUKSHETRA"}
             </span>
             {!isSmallScreen && (
-              <span className="text-gray-500 text-xs">University institute of engineering snd technology kurukshetra</span>
+              <span className="text-gray-500 text-xs font-medium">University Institute of Engineering & Technology, Kurukshetra</span>
             )}
           </div>
         </div>

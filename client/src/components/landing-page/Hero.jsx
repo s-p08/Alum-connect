@@ -16,17 +16,11 @@ const institutes = [
   {
     id: 1,
     name: "Kurukshetra University",
-    logo: "https://kuk.ac.in/wp-content/uploads/2022/02/kuk_logo-e1668590054813.png",
+    logo: logoKUK,
     location: "Kurukshetra, Haryana"
   },
   {
     id: 2,
-    name: "NIT Kurukshetra",
-    logo: "https://upload.wikimedia.org/wikipedia/en/7/75/National_Institute_of_Technology%2C_Kurukshetra_Logo.png",
-    location: "Kurukshetra, Haryana"
-  },
-  {
-    id: 3,
     name: "UIET Kurukshetra",
     logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRZC70LeQ9MZEYcAfzyfJe9qpgQ2t51b4auA&s",
     location: "Kurukshetra, Haryana"

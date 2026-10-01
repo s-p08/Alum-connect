@@ -30,15 +30,17 @@ const MessagePopup = ({ open, onClose }) => {
     fetchConversationMessages,
     loading,
     deleteConversation,
+    searchQuery,
+    setSearchQuery,
+    openConversationId,
+    setOpenConversationId,
   } = useMessage();
   
   const { user: currentUser } = useUser();
   
-  const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [messageInput, setMessageInput] = useState({});
   const [isSearching, setIsSearching] = useState(false);
-  const [openConversationId, setOpenConversationId] = useState(null);
   
   const [hasMoreMessages, setHasMoreMessages] = useState(true);
   const messagesEndRef = useRef(null);

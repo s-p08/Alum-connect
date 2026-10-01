@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import connectLogo from "../../assets/connect_logo_black.svg";
+import logoKUK from "../../assets/kuk_logo.png";
 
 // EDIT YOUR INFO ONCE HERE - IT UPDATES EVERYWHERE (DESKTOP & MOBILE)
 const contactData = {
@@ -29,15 +30,21 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 bg-white z-50">
       <div className="w-full px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 flex-wrap bg-white border-b border-gray-100">
         {/* Logo */}
-        <div className="logo flex items-center flex-shrink-0">
-          <Link to="/" className="flex items-center">
+        <div className="logo flex items-center space-x-3 flex-shrink-0">
+          <Link to="/" className="flex items-center space-x-2">
+            <img
+              src={logoKUK}
+              alt="Kurukshetra University Logo"
+              className="h-10 w-auto object-contain"
+            />
             <img
               src={connectLogo}
-              width="80"
-              height="60"
-              alt="Logo"
+              width="70"
+              height="50"
+              alt="Alum Connect Logo"
+              className="object-contain"
             />
-            <h1 className="ml-2 text-2xl font-bold text-blue-600 hidden lg:block">
+            <h1 className="ml-1 text-2xl font-bold text-blue-600 hidden lg:block">
               Alum Connect
             </h1>
           </Link>

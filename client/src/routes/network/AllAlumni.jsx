@@ -201,11 +201,11 @@ const AllAlumni = () => {
               >
                 <option value="">All</option>
                 <option value="CSE">CSE</option>
-                <option value="CSD">CSD</option>
-                <option value="CSH">CSH</option>
-                <option value="CSA">CSA</option>
+                <option value="AIML">AIML</option>
                 <option value="ECE">ECE</option>
-                <option value="ECI">ECI</option>
+                <option value="ECO">ECO</option>
+                <option value="ME">ME</option>
+                <option value="BT">BT</option>
               </select>
             </div>
             <div className="w-40">

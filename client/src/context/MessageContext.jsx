@@ -255,6 +255,33 @@ const fetchConversations = async () => {
   }, [user]);
  
 
+  const [isMessagePopupOpen, setIsMessagePopupOpen] = useState(false);
+  const [openConversationId, setOpenConversationId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Helper to trigger message drawer for a specific user profile
+  const openMessageWithUser = (targetUser) => {
+    if (!targetUser) return;
+
+    // Check if an existing conversation exists
+    const existingConv = conversations.find(
+      (c) => c.otherUser?._id === targetUser._id || c.otherUser?._id === targetUser.id
+    );
+
+    if (existingConv && existingConv._id) {
+      setActiveConversation(existingConv.otherUser);
+      fetchConversationMessages(existingConv._id);
+      setOpenConversationId(existingConv._id);
+      setSearchQuery('');
+    } else {
+      setActiveConversation(targetUser);
+      setOpenConversationId(null);
+      setSearchQuery(targetUser.name || targetUser.email || '');
+    }
+
+    setIsMessagePopupOpen(true);
+  };
+
   return (
     <MessageContext.Provider value={{
       conversations,
@@ -269,7 +296,14 @@ const fetchConversations = async () => {
       fetchConversationMessages,
       sendMessage,
       markMessagesAsRead,
-      deleteConversation 
+      deleteConversation,
+      isMessagePopupOpen,
+      setIsMessagePopupOpen,
+      openConversationId,
+      setOpenConversationId,
+      searchQuery,
+      setSearchQuery,
+      openMessageWithUser
     }}>
       {children}
     </MessageContext.Provider>

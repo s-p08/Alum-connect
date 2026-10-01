@@ -21,11 +21,12 @@ const Signup = () => {
 
   const branches = [
     { name: 'Computer Science', code: 'CSE' },
-    { name: 'Computer Science - AI/ML', code: 'CSA' },
-    { name: 'Computer Science - Data Science', code: 'CSD' },
-    { name: 'Computer Science - HCI & GT', code: 'CSH' },
+    { name: 'Computer Science - AI/ML', code: 'AIML' },
     { name: 'Electronics and Communication Engineering', code: 'ECE' },
-    { name: 'Electronics and Communication Engineering - IOT', code: 'ECI' }
+    { name: 'Electrical and Computer Engineering', code: 'ECO' },
+    { name:'Mechanical Engineering',code:'ME'},
+      { name:'Biotechnology',code:'BT'},
+
   ];
 
   const handleChange = (e) => {

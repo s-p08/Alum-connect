@@ -1,9 +1,11 @@
-// client/src/components/network/ProfileCard.jsx
 import React from 'react';
 import { FaCommentDots } from 'react-icons/fa';
 import SocialLinks from '../profile/SocialLinks';
+import { useMessage } from '../../context/MessageContext';
 
 const ProfileCard = ({ profile }) => {
+    const { openMessageWithUser } = useMessage();
+
     return (
       <div className="bg-white shadow rounded-lg overflow-hidden">
         {/* Top Section: Avatar + Basic Info */}
@@ -40,8 +42,8 @@ const ProfileCard = ({ profile }) => {
             <SocialLinks socialLinks={profile.socialLinks} />
           </div>
           <button
-            className="mt-4 inline-flex items-center text-blue-600 hover:underline"
-            // onClick={() => { /* messaging functionality here */ }}
+            onClick={() => openMessageWithUser(profile)}
+            className="mt-4 inline-flex items-center text-blue-600 hover:underline cursor-pointer"
           >
             <FaCommentDots className="mr-1" />
             Message

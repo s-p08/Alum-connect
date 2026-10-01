@@ -5,7 +5,7 @@ const MongoStore = require('connect-mongo');
 const connectDB = require('./config/db');
 const passport = require('passport');
 const dotenv = require('dotenv');
-const cors = require('cors'); 
+const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const http = require('http');
@@ -76,12 +76,12 @@ const corsOptions = {
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: [
-    'Content-Type', 
-    'Authorization', 
-    'Cookie', 
+    'Content-Type',
+    'Authorization',
+    'Cookie',
     'X-Requested-With',
     'Pragma',
-    'Cache-Control' 
+    'Cache-Control'
   ],
   optionsSuccessStatus: 200
 };
@@ -172,8 +172,8 @@ app.use((err, req, res, next) => {
   });
 
   res.status(err.status || 500).json({
-    error: process.env.NODE_ENV === 'development' 
-      ? err.message 
+    error: process.env.NODE_ENV === 'development'
+      ? err.message
       : 'An unexpected error occurred'
   });
 });

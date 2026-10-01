@@ -4,13 +4,13 @@ import axios from 'axios';
 import { Eye, EyeOff, UserCircle, X } from 'lucide-react';
 import { useUser } from '../context/UserContext';
 import connectLogo from "../assets/connect_logo_black.svg";
-import { useSidebarLayout } from '../hooks/useSidebarLayout'; 
+import { useSidebarLayout } from '../hooks/useSidebarLayout';
 
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div 
+      <div
         className="absolute inset-0 bg-black/50"
         onClick={onClose}
       />
@@ -32,9 +32,9 @@ const Login = () => {
   const { setUser, handleGoogleLogin } = useUser();
 
   // Visitor credentials
-  const visitorCredentials = { 
-    email: 'visitor@kuk.ac.in', 
-    password: 'visitor' 
+  const visitorCredentials = {
+    email: 'visitor@kuk.ac.in',
+    password: 'visitor'
   };
 
   const [formData, setFormData] = useState({
@@ -101,7 +101,7 @@ const Login = () => {
   const handleRoleChange = (e) => {
     const newRole = e.target.value;
     const oldRole = formData.role;
-    
+
     if (oldRole === 'visitor' && newRole !== 'visitor') {
       // Switching from visitor to another role - restore previous values
       setFormData({
@@ -115,7 +115,7 @@ const Login = () => {
         email: formData.email,
         password: formData.password
       });
-      
+
       setFormData({
         role: 'visitor',
         email: visitorCredentials.email,
@@ -128,7 +128,7 @@ const Login = () => {
         role: newRole
       }));
     }
-    
+
     // Hide the password field when role changes to visitor
     if (newRole === 'visitor') {
       setShowPassword(false);
@@ -151,15 +151,15 @@ const Login = () => {
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-6">
-            <img 
-              src={connectLogo} 
-              alt="AlumConnect Logo" 
+            <img
+              src={connectLogo}
+              alt="AlumConnect Logo"
               className="w-20 h-auto"
             />
           </div>
           <h2 className="text-2xl font-bold text-blue-700 mb-2">Welcome Back</h2>
           <p className="text-gray-500">Please sign in to continue</p>
-          
+
           {/* Added visitor access note */}
           <div className="mt-3 py-2 px-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800 font-medium">
             NOTE:- For Visitor Access, use <b>visitor@kuk.ac.in</b> / <b>visitor</b> or Select Visitor Role From the Drop Down.
@@ -279,8 +279,8 @@ const Login = () => {
             </div>
           </div>
           <div className="mt-2 text-center text-sm text-gray-600">
-              Please use your College email (@kuk.ac.in)
-             </div>
+            Please use your College email (@kuk.ac.in)
+          </div>
 
           <button
             type="button"

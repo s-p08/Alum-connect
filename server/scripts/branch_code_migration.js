@@ -7,58 +7,52 @@ dotenv.config();
 
 // Define mappings from old branch values to new standardized values
 const branchMappings = {
-  // Map any existing branch text to proper code and standard name
   'Computer Science': { code: 'CSE', name: 'Computer Science' },
   'Computer Science Engineering': { code: 'CSE', name: 'Computer Science' },
   'Computer Science and Engineering': { code: 'CSE', name: 'Computer Science' },
   'CSE': { code: 'CSE', name: 'Computer Science' },
   
-  'Artificial Intelligence': { code: 'CSA', name: 'Computer Science - AI/ML' },
-  'Machine Learning': { code: 'CSA', name: 'Computer Science - AI/ML' },
-  'AI & ML': { code: 'CSA', name: 'Computer Science - AI/ML' },
-  'Computer Science and Artificial Intelligence': { code: 'CSA', name: 'Computer Science - AI/ML' },
-  
-  'Data Science': { code: 'CSD', name: 'Computer Science - DSA' },
-  'Data Analytics': { code: 'CSD', name: 'Computer Science - DSA' },
-  'Computer Science - Data Science': { code: 'CSD', name: 'Computer Science - DSA' },
-  'Computer Science and Data Science': { code: 'CSD', name: 'Computer Science - DSA' },
-  
-  'Human Computer Interaction': { code: 'CSH', name: 'Computer Science - HCI & GT' },
-  'HCI': { code: 'CSH', name: 'Computer Science - HCI & GT' },
-  'Gaming Technology': { code: 'CSH', name: 'Computer Science - HCI & GT' },
-  'Computer Science HCI & GT': { code: 'CSH', name: 'Computer Science - HCI & GT' },
-  'Computer Science - HCI & GT': { code: 'CSH', name: 'Computer Science - HCI & GT' },
+  'Artificial Intelligence': { code: 'AIML', name: 'Computer Science - AI/ML' },
+  'Machine Learning': { code: 'AIML', name: 'Computer Science - AI/ML' },
+  'AI & ML': { code: 'AIML', name: 'Computer Science - AI/ML' },
+  'Computer Science - AI/ML': { code: 'AIML', name: 'Computer Science - AI/ML' },
+  'CSA': { code: 'AIML', name: 'Computer Science - AI/ML' },
+  'AIML': { code: 'AIML', name: 'Computer Science - AI/ML' },
   
   'Electronics and Communication Engineering': { code: 'ECE', name: 'Electronics and Communication Engineering' },
   'Electronics and Communication': { code: 'ECE', name: 'Electronics and Communication Engineering' },
   'ECE': { code: 'ECE', name: 'Electronics and Communication Engineering' },
-  
-  'Internet of Things': { code: 'ECI', name: 'Internet of Things' },
-  'Electronics and Instrumentation': { code: 'ECI', name: 'Internet of Things' },
-  'ECI': { code: 'ECI', name: 'Internet of Things' }
+
+  'Electrical and Computer Engineering': { code: 'ECO', name: 'Electrical and Computer Engineering' },
+  'ECO': { code: 'ECO', name: 'Electrical and Computer Engineering' },
+
+  'Mechanical Engineering': { code: 'ME', name: 'Mechanical Engineering' },
+  'Mechanical': { code: 'ME', name: 'Mechanical Engineering' },
+  'ME': { code: 'ME', name: 'Mechanical Engineering' },
+
+  'Biotechnology': { code: 'BT', name: 'Biotechnology' },
+  'BT': { code: 'BT', name: 'Biotechnology' }
 };
 
 // Fallback mapping function for branches not found in the direct mapping
 const determineBranchMapping = (branchText) => {
-  // Default to CSE if we can't determine
   let result = { code: 'CSE', name: 'Computer Science' };
-  
   const lowerBranch = branchText.toLowerCase();
   
-  if (lowerBranch.includes('data') || lowerBranch.includes('csd')) {
-    result = { code: 'CSD', name: 'Computer Science - DSA' };
-  } 
-  else if (lowerBranch.includes('arti') || lowerBranch.includes('machine') || lowerBranch.includes('ai') || lowerBranch.includes('csa')) {
-    result = { code: 'CSA', name: 'Computer Science - AI/ML' };
+  if (lowerBranch.includes('arti') || lowerBranch.includes('machine') || lowerBranch.includes('ai') || lowerBranch.includes('aiml') || lowerBranch.includes('csa')) {
+    result = { code: 'AIML', name: 'Computer Science - AI/ML' };
   }
-  else if (lowerBranch.includes('hci') || lowerBranch.includes('human') || lowerBranch.includes('game') || lowerBranch.includes('csh')) {
-    result = { code: 'CSH', name: 'Computer Science - HCI & GT' };
-  }
-  else if (lowerBranch.includes('electron') || lowerBranch.includes('communi') || lowerBranch.includes('ece')) {
+  else if (lowerBranch.includes('electron') || lowerBranch.includes('ece')) {
     result = { code: 'ECE', name: 'Electronics and Communication Engineering' };
   }
-  else if (lowerBranch.includes('iot') || lowerBranch.includes('instru') || lowerBranch.includes('eci')) {
-    result = { code: 'ECI', name: 'Internet of Things' };
+  else if (lowerBranch.includes('electr') || lowerBranch.includes('eco')) {
+    result = { code: 'ECO', name: 'Electrical and Computer Engineering' };
+  }
+  else if (lowerBranch.includes('mech') || lowerBranch.includes('me')) {
+    result = { code: 'ME', name: 'Mechanical Engineering' };
+  }
+  else if (lowerBranch.includes('bio') || lowerBranch.includes('bt')) {
+    result = { code: 'BT', name: 'Biotechnology' };
   }
   
   return result;

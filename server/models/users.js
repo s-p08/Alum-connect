@@ -4,23 +4,23 @@ const bcrypt = require('bcrypt');
 
 const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  email: { 
-    type: String, 
-    required: true, 
+  email: {
+    type: String,
+    required: true,
     unique: true,
     lowercase: true,
     trim: true,
     validate: {
-      validator: function(v) {
+      validator: function (v) {
         return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v);
       },
       message: props => `${props.value} is not a valid email!`
     }
   },
-  password: { 
-    type: String, 
-    required: function() { return !this.googleId; }, // Only required if not logging in with Google
-    minlength: 4 
+  password: {
+    type: String,
+    required: function () { return !this.googleId; }, // Only required if not logging in with Google
+    minlength: 4
   },
   googleId: { type: String, unique: true, sparse: true },
   avatar: { type: String },
@@ -34,21 +34,20 @@ const UserSchema = new mongoose.Schema({
     enum: [
       'Computer Science',
       'Computer Science - AI/ML',
-      'Computer Science - DSA',
-      'Computer Science - Data Science',
-      'Computer Science - HCI & GT',
       'Electronics and Communication Engineering',
-      'Electronics and Communication Engineering - IOT',
+      'Electrical and Computer Engineering',
+      'Mechanical Engineering',
+      'Biotechnology',
       'Administration'
     ],
     required: false
   },
   branchCode: {
     type: String,
-    enum: ['CSE', 'CSA', 'CSD', 'CSH', 'ECE', 'ECI', 'ADMIN'],
+    enum: ['CSE', 'AIML', 'ECE', 'ECO', 'ME', 'BT', 'ADMIN'],
     required: false
   },
-  currentCompany: { type: String, default: null},
+  currentCompany: { type: String, default: null },
   currentCompanyRole: { type: String, default: null },
   location: { type: String },
   batch: { type: String },
@@ -59,12 +58,12 @@ const UserSchema = new mongoose.Schema({
     github: { type: String, default: null },
     x: { type: String, default: null }  // Changed from twitter to x to match your data
   },
-  personalEmail: { 
-    type: String, 
-    lowercase: true, 
+  personalEmail: {
+    type: String,
+    lowercase: true,
     trim: true,
     validate: {
-      validator: function(v) {
+      validator: function (v) {
         // Allow null or valid email
         return v === null || /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v);
       },
@@ -75,14 +74,14 @@ const UserSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Hash password before saving
-UserSchema.pre('save', async function(next) {
+UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   this.password = await bcrypt.hash(this.password, 12);
   next();
 });
 
 // Add password comparison method
-UserSchema.methods.comparePassword = async function(candidatePassword) {
+UserSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
